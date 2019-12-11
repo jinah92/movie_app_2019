@@ -7,7 +7,6 @@ return <div>
 </div>
 }
 
-
 const foodlike = [
   {
     name : "kimchi",
