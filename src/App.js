@@ -1,47 +1,79 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
+import Food from './food';
 
-function Potato(){
-  return(
-    <div>I love~!</div>
-  );
+class App extends React.Component{
+  //최초 호출 (construtor)
+  constructor(props){
+      super(props);
+      console.log('hello');
+  }
+  state={
+    count: 0
+  }
+  add=()=>{
+    //setState을 호출할 때마다, 다시 랜더링 
+    //직접 state를 호출하면 성능면에서 불이익 (아래 방법으로 호출하여 state 접근 지향)
+    this.setState(current => ({
+      count: current.count+1
+    }))
+  }
+  minus=()=>{
+    this.setState(current=>({
+      count: current.count-1
+    }))
+  }
+  //state가 업데이트 된 후, Render 이후 호출
+  componentDidUpdate(){
+    console.log('I just updated');
+  }
+  //Render 이후 호출
+  componentDidMount(){
+    console.log('component rendered');
+  }
+  //Component가 죽을 때 호출
+  componentWillUnmount(){
+    console.log('good bye');
+  }
+  render(){
+    console.log('I am rendering');
+    return <div>
+      <h1>I am a Class {this.state.count}</h1>
+      <button onClick={this.add}>Add</button>
+      <button onClick={this.minus}>Minus</button>
+      </div>
+    
+  }
 }
 
-function App(){
+export default App;
+
+/* Food.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  rating: PropTypes.number
+} */
+
+/* function App(){
   return(
     <div>
       <h1>Hello~!</h1>
-      <Potato />
+      <div>
+        {foodlike.map((dish)=>{
+          return <Food 
+          key={dish.id}
+          name={dish.name}
+          image={dish.image}
+          rating={dish.rating}/>
+        })}
+      </div>
     </div>
   );
 }
-
-/* const foodlike = [
-  {
-    id : 1,
-    name : "kimchi",
-    image : 
-    "https://cdn.crowdpic.net/detail-thumb/thumb_d_CDC14868821FF3F20C77BC8BC15E6355.jpg",
-    rating : 5.0
-  },
-  {
-    id : 2,
-    name : "ramen",
-    image :
-    "http://static.hubzum.zumst.com/hubzum/2019/04/19/13/694050ce163a4655bc5032ac11e0bcd5.jpg",
-    rating : 4.9
-  },
-  {
-    id : 3,
-    name : "dduckbockgi",
-    image :
-    "http://t1.daumcdn.net/liveboard/diningcode/f4706d9efe7440afb665280ac9ca475e.JPG",
-    rating : 4.8
-  }
-]
+ */
 
 
-function Food({name, picture, rating}) {
+/* function Food({name, picture, rating}) {
   return <div>
       <h2>I like {name}</h2>
       <h4>{rating}/5.0</h4>
@@ -69,5 +101,3 @@ function App() {
     </div>
   );
 } */
-
-export default App;
